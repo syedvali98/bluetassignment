@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="row m-4">
+    <div class="col-6">
+      <div class="row">
+        <div class="col-6">
+          <h5>Select Monthly Revenue</h5>
+          <div class="row">
+            <div
+              *ngFor="let input of months; let i = index"
+              class="col-12 my-3"
+            >
+              <label class="form-label">{{ input }}</label>
+              <input
+                class="form-control"
+                type="number"
+                (change)="updatePoint(i, $event.target.value)"
+                [value]="i + 1"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <h5>Select Color</h5>
+          <div class="row">
+            <div
+              *ngFor="let input of months; let i = index"
+              class="col-12 my-3"
+            >
+              <label class="form-label">Color</label>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                (change)="updateColor($event.target.value, i)"
+              >
+                <option *ngFor="let color of availableColors" [value]="color">
+                  {{ color }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 my-3">
+          <label class="form-label">Graph type</label>
+          <div *ngFor="let graph of graphTypes" class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+              (change)="updateChartType(graph.value)"
+              [(ngModel)]="selectedChartType"
+              [value]="graph.value"
+            />
+            <label class="form-check-label" for="flexRadioDefault1">
+              {{ graph.label | titlecase }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6"><div [chart]="chart"></div></div>
+  </div>
+  <div class="row m-4">
+    <div class="col-12">
+      <agm-map [latitude]="lat" [longitude]="lng">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      </agm-map>
+    </div>
+    <div class="col-10 d-grid mx-auto m-4">
+      <button (click)="getCurrentLocation()" class="btn btn-primary btn-block">
+        Get current location
+      </button>
+    </div>
+  </div>
+</div>
